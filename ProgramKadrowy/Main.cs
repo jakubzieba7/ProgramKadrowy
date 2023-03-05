@@ -50,11 +50,20 @@ namespace ProgramKadrowy
         {
             AddEmployee addEmployee = new AddEmployee();
             addEmployee.ShowDialog();
+            dgvEmployeesGrid.DataSource = _serializers.DeserializeFromFile_NewJson();
         }
 
         private void btEditEmployee_Click(object sender, EventArgs e)
         {
+            if (dgvEmployeesGrid.SelectedRows == null)
+            {
+                MessageBox.Show("Zaznacz pracownika do edycji");
+                return;
+            }
 
+            AddEmployee addEmployee = new AddEmployee(Convert.ToInt32(dgvEmployeesGrid.SelectedRows[0].Cells[0].Value));
+            addEmployee.ShowDialog();
+            dgvEmployeesGrid.DataSource = _serializers.DeserializeFromFile_NewJson();
         }
 
         private void btRefreshGridView_Click(object sender, EventArgs e)
