@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.tbEmployeeID = new System.Windows.Forms.TextBox();
-            this.tbName = new System.Windows.Forms.TextBox();
-            this.tbSurname = new System.Windows.Forms.TextBox();
+            this.tbFirstName = new System.Windows.Forms.TextBox();
+            this.tbLastName = new System.Windows.Forms.TextBox();
             this.tbSalary = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -53,22 +53,23 @@
             // 
             this.tbEmployeeID.Location = new System.Drawing.Point(123, 12);
             this.tbEmployeeID.Name = "tbEmployeeID";
+            this.tbEmployeeID.ReadOnly = true;
             this.tbEmployeeID.Size = new System.Drawing.Size(146, 20);
             this.tbEmployeeID.TabIndex = 0;
             // 
-            // tbName
+            // tbFirstName
             // 
-            this.tbName.Location = new System.Drawing.Point(123, 50);
-            this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(146, 20);
-            this.tbName.TabIndex = 1;
+            this.tbFirstName.Location = new System.Drawing.Point(123, 50);
+            this.tbFirstName.Name = "tbFirstName";
+            this.tbFirstName.Size = new System.Drawing.Size(146, 20);
+            this.tbFirstName.TabIndex = 1;
             // 
-            // tbSurname
+            // tbLastName
             // 
-            this.tbSurname.Location = new System.Drawing.Point(123, 81);
-            this.tbSurname.Name = "tbSurname";
-            this.tbSurname.Size = new System.Drawing.Size(146, 20);
-            this.tbSurname.TabIndex = 2;
+            this.tbLastName.Location = new System.Drawing.Point(123, 81);
+            this.tbLastName.Name = "tbLastName";
+            this.tbLastName.Size = new System.Drawing.Size(146, 20);
+            this.tbLastName.TabIndex = 2;
             // 
             // tbSalary
             // 
@@ -232,8 +233,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbSalary);
-            this.Controls.Add(this.tbSurname);
-            this.Controls.Add(this.tbName);
+            this.Controls.Add(this.tbLastName);
+            this.Controls.Add(this.tbFirstName);
             this.Controls.Add(this.tbEmployeeID);
             this.Name = "AddEmployee";
             this.Text = "Dodawanie pracownika";
@@ -245,8 +246,8 @@
         #endregion
 
         private System.Windows.Forms.TextBox tbEmployeeID;
-        private System.Windows.Forms.TextBox tbName;
-        private System.Windows.Forms.TextBox tbSurname;
+        private System.Windows.Forms.TextBox tbFirstName;
+        private System.Windows.Forms.TextBox tbLastName;
         private System.Windows.Forms.TextBox tbSalary;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

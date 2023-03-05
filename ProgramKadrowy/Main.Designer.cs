@@ -40,8 +40,8 @@
             // dgvEmployeesGrid
             // 
             this.dgvEmployeesGrid.AllowUserToDeleteRows = false;
-            this.dgvEmployeesGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.dgvEmployeesGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvEmployeesGrid.BackgroundColor = System.Drawing.Color.White;
             this.dgvEmployeesGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -58,6 +58,7 @@
             this.btAddEmployee.TabIndex = 1;
             this.btAddEmployee.Text = "Dodaj";
             this.btAddEmployee.UseVisualStyleBackColor = true;
+            this.btAddEmployee.Click += new System.EventHandler(this.btAddEmployee_Click);
             // 
             // btEditEmployee
             // 
@@ -67,6 +68,7 @@
             this.btEditEmployee.TabIndex = 2;
             this.btEditEmployee.Text = "Edytuj";
             this.btEditEmployee.UseVisualStyleBackColor = true;
+            this.btEditEmployee.Click += new System.EventHandler(this.btEditEmployee_Click);
             // 
             // btRefreshGridView
             // 
@@ -76,6 +78,7 @@
             this.btRefreshGridView.TabIndex = 3;
             this.btRefreshGridView.Text = "Odśwież";
             this.btRefreshGridView.UseVisualStyleBackColor = true;
+            this.btRefreshGridView.Click += new System.EventHandler(this.btRefreshGridView_Click);
             // 
             // cbSortList
             // 
