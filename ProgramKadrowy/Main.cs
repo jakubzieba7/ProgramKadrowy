@@ -12,7 +12,8 @@ namespace ProgramKadrowy
         public Main()
         {
             InitializeComponent();
-            SerializersJSONTest();
+            //SerializersJSONTest();
+            dgvEmployeesGrid.DataSource = _serializers.DeserializeFromFile_NewJson();
         }
 
         public void SerializersJSONTest()
@@ -47,7 +48,8 @@ namespace ProgramKadrowy
 
         private void btAddEmployee_Click(object sender, EventArgs e)
         {
-
+            AddEmployee addEmployee = new AddEmployee();
+            addEmployee.ShowDialog();
         }
 
         private void btEditEmployee_Click(object sender, EventArgs e)

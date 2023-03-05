@@ -12,8 +12,8 @@ namespace ProgramKadrowy
 {
     internal class JSONSerializers
     {
-        string _filePathNewtonSoft = $@"{Path.GetDirectoryName(Application.ExecutablePath)}\..\..\..\SerializacjaNewtonSoft.json";
-        string _filePathNewJson = $@"{Path.GetDirectoryName(Application.ExecutablePath)}\..\..\..\SerializacjaNewJson.json";
+        string _filePathNewtonSoft = $@"{Path.GetDirectoryName(Application.ExecutablePath)}\SerializacjaNewtonSoft.json";
+        string _filePathNewJson = $@"{Path.GetDirectoryName(Application.ExecutablePath)}\SerializacjaNewJson.json";
         public JSONSerializers() { }
 
         public void SerializeToFile_NewtonSoft(List<Employee> employees)

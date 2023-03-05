@@ -45,7 +45,7 @@
             this.dtpHireDate = new System.Windows.Forms.DateTimePicker();
             this.cbAgreementType = new System.Windows.Forms.ComboBox();
             this.cbIsActiveEmployee = new System.Windows.Forms.CheckBox();
-            this.btExit = new System.Windows.Forms.Button();
+            this.btCancel = new System.Windows.Forms.Button();
             this.btConfirm = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -194,14 +194,15 @@
             this.cbIsActiveEmployee.Text = "Aktywny pracownik";
             this.cbIsActiveEmployee.UseVisualStyleBackColor = true;
             // 
-            // btExit
+            // btCancel
             // 
-            this.btExit.Location = new System.Drawing.Point(87, 460);
-            this.btExit.Name = "btExit";
-            this.btExit.Size = new System.Drawing.Size(75, 23);
-            this.btExit.TabIndex = 17;
-            this.btExit.Text = "Wyjdź";
-            this.btExit.UseVisualStyleBackColor = true;
+            this.btCancel.Location = new System.Drawing.Point(87, 460);
+            this.btCancel.Name = "btCancel";
+            this.btCancel.Size = new System.Drawing.Size(75, 23);
+            this.btCancel.TabIndex = 17;
+            this.btCancel.Text = "Anuluj";
+            this.btCancel.UseVisualStyleBackColor = true;
+            this.btCancel.Click += new System.EventHandler(this.btCancel_Click);
             // 
             // btConfirm
             // 
@@ -211,6 +212,7 @@
             this.btConfirm.TabIndex = 18;
             this.btConfirm.Text = "Zatwierdź";
             this.btConfirm.UseVisualStyleBackColor = true;
+            this.btConfirm.Click += new System.EventHandler(this.btConfirm_Click);
             // 
             // AddEmployee
             // 
@@ -218,7 +220,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 500);
             this.Controls.Add(this.btConfirm);
-            this.Controls.Add(this.btExit);
+            this.Controls.Add(this.btCancel);
             this.Controls.Add(this.cbIsActiveEmployee);
             this.Controls.Add(this.cbAgreementType);
             this.Controls.Add(this.dtpHireDate);
@@ -262,7 +264,7 @@
         private System.Windows.Forms.DateTimePicker dtpHireDate;
         private System.Windows.Forms.ComboBox cbAgreementType;
         private System.Windows.Forms.CheckBox cbIsActiveEmployee;
-        private System.Windows.Forms.Button btExit;
+        private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.Button btConfirm;
     }
 }
