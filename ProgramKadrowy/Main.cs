@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ProgramKadrowy
 {
     public partial class Main : Form
     {
-        private JSONSerializers serializers=new JSONSerializers();
+        private JSONSerializers _serializers = new JSONSerializers();
         
         public Main()
         {
             InitializeComponent();
-            //SerializersJSONTest();
+            SerializersJSONTest();
         }
 
         public void SerializersJSONTest()
@@ -31,13 +32,13 @@ namespace ProgramKadrowy
                     Remarks="Test",
                 }
             };
-            serializers.SerializeToFile_NewtonSoft(employees);
-            serializers.SerializeToFile_NewJson(employees);
+            _serializers.SerializeToFile_NewtonSoft(employees);
+            _serializers.SerializeToFile_NewJson(employees);
 
-            //List<Employee> employees1= serializers.DeserializeFromFile_NewtonSoft();
-            var employees2 = serializers.DeserializeFromFile_NewJson();
+            //List<Employee> employees1= _serializers.DeserializeFromFile_NewtonSoft().ToList();
+            var employees2 = _serializers.DeserializeFromFile_NewJson();
 
-            //dgvEmployeesGrid.DataSource= employees1;
+            //dgvEmployeesGrid.DataSource = employees1;
             dgvEmployeesGrid.DataSource = employees2;
         }
 

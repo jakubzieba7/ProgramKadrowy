@@ -1,13 +1,12 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewJson = System.Text.Json;
+using System.Text.Json.Serialization;   //[JsonInclude]
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
+using System;
 
 namespace ProgramKadrowy
 {
@@ -22,31 +21,31 @@ namespace ProgramKadrowy
             JsonSerializer serializer = new JsonSerializer();
 
             using (StreamWriter writerSW = new StreamWriter(_filePathNewtonSoft))
-            //using (JsonWriter writerJson = new JsonTextWriter(writerSW))
+            using (JsonWriter writerJson = new JsonTextWriter(writerSW))
             {
-                serializer.Serialize(writerSW, employees);
+                serializer.Serialize(writerJson, employees);
                 writerSW.Close();
-                //writerJson.Close();
+                writerJson.Close();
             }
         }
 
         public void SerializeToFile_NewJson(List<Employee> employees)
         {
-            NewJson.JsonSerializerOptions options = new NewJson.JsonSerializerOptions()
-            {
-                IncludeFields = true,
-                PropertyNameCaseInsensitive = true,
-                WriteIndented = true,
-                PropertyNamingPolicy = NewJson.JsonNamingPolicy.CamelCase,
-            };
+            NewJson.JsonSerializerOptions options = new NewJson.JsonSerializerOptions();
+            //{
+            //    IncludeFields = true,
+            //    PropertyNameCaseInsensitive = true,
+            //    WriteIndented = true,
+            //    PropertyNamingPolicy = NewJson.JsonNamingPolicy.CamelCase,
+            //};
 
             using (Stream stream = File.Create(_filePathNewJson))
             {
-                NewJson.JsonSerializer.Serialize(utf8Json: stream, value: employees, options);
+                NewJson.JsonSerializer.Serialize(utf8Json: stream, value: employees, options = default);
             }
         }
 
-        public async Task<List<Employee>> DeserializeFromFile_NewJson()
+        public List<Employee> DeserializeFromFile_NewJson()
         {
             if (!File.Exists(_filePathNewJson))
                 return new List<Employee> { new Employee() };
@@ -54,7 +53,7 @@ namespace ProgramKadrowy
             FileStream readerJson = File.Open(_filePathNewJson, FileMode.Open);
             using (readerJson)
             {
-                List<Employee> employyes = await NewJson.JsonSerializer.DeserializeAsync(readerJson, typeof(List<Employee>)) as List<Employee>;
+                List<Employee> employyes = NewJson.JsonSerializer.Deserialize(readerJson, typeof(List<Employee>))as List<Employee>;
                 readerJson.Close();
                 return employyes;
             }

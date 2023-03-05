@@ -47,7 +47,7 @@
             this.dgvEmployeesGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmployeesGrid.Location = new System.Drawing.Point(12, 55);
             this.dgvEmployeesGrid.Name = "dgvEmployeesGrid";
-            this.dgvEmployeesGrid.Size = new System.Drawing.Size(854, 424);
+            this.dgvEmployeesGrid.Size = new System.Drawing.Size(728, 429);
             this.dgvEmployeesGrid.TabIndex = 0;
             // 
             // btAddEmployee
