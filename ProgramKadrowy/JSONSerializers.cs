@@ -10,13 +10,16 @@ using System;
 
 namespace ProgramKadrowy
 {
-    internal class JSONSerializers
+    internal class JSONSerializers<T>where T : new()
     {
-        string _filePathNewtonSoft = $@"{Path.GetDirectoryName(Application.ExecutablePath)}\SerializacjaNewtonSoft.json";
-        string _filePathNewJson = $@"{Path.GetDirectoryName(Application.ExecutablePath)}\SerializacjaNewJson.json";
-        public JSONSerializers() { }
+        private string _filePathNewtonSoft = $@"{Path.GetDirectoryName(Application.ExecutablePath)}\SerializacjaNewtonSoft.json";
+        private string _filePathNewJson = $@"{Path.GetDirectoryName(Application.ExecutablePath)}\SerializacjaNewJson.json";
+         
+        public JSONSerializers() 
+        {
+        }
 
-        public void SerializeToFile_NewtonSoft(List<Employee> employees)
+        public void SerializeToFile_NewtonSoft(T employees)
         {
             JsonSerializer serializer = new JsonSerializer();
 
@@ -24,12 +27,12 @@ namespace ProgramKadrowy
             using (JsonWriter writerJson = new JsonTextWriter(writerSW))
             {
                 serializer.Serialize(writerJson, employees);
-                writerSW.Close();
                 writerJson.Close();
+                writerSW.Close();
             }
         }
 
-        public void SerializeToFile_NewJson(List<Employee> employees)
+        public void SerializeToFile_NewJson(T employees)
         {
             NewJson.JsonSerializerOptions options = new NewJson.JsonSerializerOptions();
             //{
@@ -45,26 +48,26 @@ namespace ProgramKadrowy
             }
         }
 
-        public List<Employee> DeserializeFromFile_NewJson()
+        public T DeserializeFromFile_NewJson()
         {
             if (!File.Exists(_filePathNewJson))
-                return new List<Employee> { new Employee() };
+                return new T { };
 
             FileStream readerJson = File.Open(_filePathNewJson, FileMode.Open);
             using (readerJson)
             {
-                List<Employee> employyes = NewJson.JsonSerializer.Deserialize(readerJson, typeof(List<Employee>))as List<Employee>;
+                T employyes = (T)NewJson.JsonSerializer.Deserialize(readerJson, typeof(T));
                 readerJson.Close();
                 return employyes;
             }
         }
 
-        public List<Employee> DeserializeFromFile_NewtonSoft()
+        public T DeserializeFromFile_NewtonSoft()
         {
             if (!File.Exists(_filePathNewtonSoft))
-                return new List<Employee> { new Employee() };
+                return new T { };
 
-            List<Employee> employees = JsonConvert.DeserializeObject<List<Employee>>(_filePathNewtonSoft);
+            T employees = JsonConvert.DeserializeObject<T>(_filePathNewtonSoft);
             return employees;
         }
     }

@@ -12,8 +12,9 @@ namespace ProgramKadrowy
 {
     public partial class AddEmployee : Form
     {
-        private JSONSerializers _serializer = new JSONSerializers();
+        private JSONSerializers<List<Employee>> _serializer = new JSONSerializers<List<Employee>>();
         private int _employeeID;
+        private Employee _employee;
         public AddEmployee(int employeeID=0)
         {
             InitializeComponent();
@@ -21,41 +22,62 @@ namespace ProgramKadrowy
             _employeeID = employeeID;
             tbFirstName.Select();
 
+            GetEmployeeData(_employeeID);
+            
+        }
+
+        private void GetEmployeeData(int employeeID)
+        {
             if (employeeID != 0)
             {
+                Text = "Edytowanie danych pracownika";
                 var employees = _serializer.DeserializeFromFile_NewJson();
-                var employee = employees.FirstOrDefault(x => x.EmployeeId == employeeID);
+                _employee = employees.FirstOrDefault(x => x.EmployeeId == employeeID);
 
-                if (employee == null)
+                if (_employee == null)
                     throw new Exception("Brak pracownika o podanym ID");
 
-                tbEmployeeID.Text = employeeID.ToString();
-                tbFirstName.Text = employee.FirstName;
-                tbLastName.Text = employee.LastName;
-                tbSalary.Text = employee.Salary.ToString();
-                rtbRemarks.Text = employee.Remarks;
-                cbAgreementType.SelectedItem = employee.Contract;
-                dtpHireDate.Value = employee.EmploymentDate;
-                dtpWorkTermination.Value = (DateTime)employee.UnemploymentDate;
-                cbIsActiveEmployee.Checked = employee.IsActive;
+                FillEmployeeData();
             }
         }
 
+        private void FillEmployeeData()
+        {
+            tbEmployeeID.Text = _employeeID.ToString();
+            tbFirstName.Text = _employee.FirstName;
+            tbLastName.Text = _employee.LastName;
+            tbSalary.Text = _employee.Salary.ToString();
+            rtbRemarks.Text = _employee.Remarks;
+            cbAgreementType.SelectedItem = _employee.Contract;
+            dtpHireDate.Value = _employee.EmploymentDate;
+            dtpWorkTermination.Value = (DateTime)_employee.UnemploymentDate;
+            cbIsActiveEmployee.Checked = _employee.IsActive;
+        }
 
         private void btConfirm_Click(object sender, EventArgs e)
         {
             var employees = _serializer.DeserializeFromFile_NewJson();
 
             if (_employeeID != 0)
-            {
                 employees.RemoveAll(x => x.EmployeeId == _employeeID);
-            }
             else
-            {
-                var employeeWithHighestID = employees.OrderByDescending(x => x.EmployeeId).FirstOrDefault();
-                _employeeID = employeeWithHighestID == null ? 1 : employeeWithHighestID.EmployeeId + 1;
-            }
+                AssignEmployeeHighestID(employees);
 
+            AddNewEmployee(employees);
+            
+            _serializer.SerializeToFile_NewJson(employees);
+
+            Close();
+        }
+
+        private void AssignEmployeeHighestID(List<Employee> employees)
+        {
+            var employeeWithHighestID = employees.OrderByDescending(x => x.EmployeeId).FirstOrDefault();
+            _employeeID = employeeWithHighestID == null ? 1 : employeeWithHighestID.EmployeeId + 1;
+        }
+
+        private void AddNewEmployee(List<Employee> employees)
+        {
             Employee employee = new Employee()
             {
                 EmployeeId = _employeeID,
@@ -63,18 +85,15 @@ namespace ProgramKadrowy
                 LastName = tbLastName.Text,
                 Contract = cbAgreementType.SelectedIndex.ToString(),
                 Remarks = rtbRemarks.Text,
-                Salary = Convert.ToDecimal(tbSalary.Text),
+                Salary = decimal.TryParse(tbSalary.Text, out decimal salary) == true ? Convert.ToDecimal(tbSalary.Text) : salary,
                 EmploymentDate = DateTime.Now,
                 UnemploymentDate = DateTime.Now,
                 IsActive = true,
             };
 
             employees.Add(employee);
-            
-            _serializer.SerializeToFile_NewJson(employees);
-
-            Close();
         }
+
 
         private void btCancel_Click(object sender, EventArgs e)
         {

@@ -43,11 +43,14 @@
             this.dgvEmployeesGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvEmployeesGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvEmployeesGrid.BackgroundColor = System.Drawing.Color.White;
             this.dgvEmployeesGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEmployeesGrid.Location = new System.Drawing.Point(12, 55);
+            this.dgvEmployeesGrid.Location = new System.Drawing.Point(0, 42);
             this.dgvEmployeesGrid.Name = "dgvEmployeesGrid";
-            this.dgvEmployeesGrid.Size = new System.Drawing.Size(728, 429);
+            this.dgvEmployeesGrid.RowHeadersVisible = false;
+            this.dgvEmployeesGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvEmployeesGrid.Size = new System.Drawing.Size(869, 420);
             this.dgvEmployeesGrid.TabIndex = 0;
             // 
             // btAddEmployee
@@ -102,7 +105,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(886, 524);
+            this.ClientSize = new System.Drawing.Size(870, 465);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbSortList);
             this.Controls.Add(this.btRefreshGridView);

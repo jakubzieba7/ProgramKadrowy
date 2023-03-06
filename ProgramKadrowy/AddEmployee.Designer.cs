@@ -238,7 +238,10 @@
             this.Controls.Add(this.tbLastName);
             this.Controls.Add(this.tbFirstName);
             this.Controls.Add(this.tbEmployeeID);
+            this.MaximumSize = new System.Drawing.Size(300, 539);
+            this.MinimumSize = new System.Drawing.Size(300, 539);
             this.Name = "AddEmployee";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dodawanie pracownika";
             this.ResumeLayout(false);
             this.PerformLayout();
