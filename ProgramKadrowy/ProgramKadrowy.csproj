@@ -98,6 +98,7 @@
     <Compile Include="AddEmployee.Designer.cs">
       <DependentUpon>AddEmployee.cs</DependentUpon>
     </Compile>
+    <Compile Include="ContractType.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="JSONSerializers.cs" />
     <Compile Include="Main.cs">

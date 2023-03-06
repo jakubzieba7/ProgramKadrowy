@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProgramKadrowy
@@ -22,8 +18,9 @@ namespace ProgramKadrowy
             _employeeID = employeeID;
             tbFirstName.Select();
 
+            FillContractTypeCB();
+
             GetEmployeeData(_employeeID);
-            
         }
 
         private void GetEmployeeData(int employeeID)
@@ -94,10 +91,14 @@ namespace ProgramKadrowy
             employees.Add(employee);
         }
 
-
         private void btCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void FillContractTypeCB()
+        {
+            cbAgreementType.DataSource = Enum.GetValues(typeof(ContractType));
         }
     }
 }
