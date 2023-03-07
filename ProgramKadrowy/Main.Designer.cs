@@ -32,7 +32,7 @@
             this.btAddEmployee = new System.Windows.Forms.Button();
             this.btEditEmployee = new System.Windows.Forms.Button();
             this.btRefreshGridView = new System.Windows.Forms.Button();
-            this.cbSortList = new System.Windows.Forms.ComboBox();
+            this.cbSortListIsActive = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployeesGrid)).BeginInit();
             this.SuspendLayout();
@@ -83,13 +83,14 @@
             this.btRefreshGridView.UseVisualStyleBackColor = true;
             this.btRefreshGridView.Click += new System.EventHandler(this.btRefreshGridView_Click);
             // 
-            // cbSortList
+            // cbSortListIsActive
             // 
-            this.cbSortList.FormattingEnabled = true;
-            this.cbSortList.Location = new System.Drawing.Point(457, 12);
-            this.cbSortList.Name = "cbSortList";
-            this.cbSortList.Size = new System.Drawing.Size(121, 21);
-            this.cbSortList.TabIndex = 4;
+            this.cbSortListIsActive.FormattingEnabled = true;
+            this.cbSortListIsActive.Location = new System.Drawing.Point(457, 12);
+            this.cbSortListIsActive.Name = "cbSortListIsActive";
+            this.cbSortListIsActive.Size = new System.Drawing.Size(121, 21);
+            this.cbSortListIsActive.TabIndex = 4;
+            this.cbSortListIsActive.SelectedIndexChanged += new System.EventHandler(this.cbSortListIsActive_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -107,7 +108,7 @@
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(870, 465);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.cbSortList);
+            this.Controls.Add(this.cbSortListIsActive);
             this.Controls.Add(this.btRefreshGridView);
             this.Controls.Add(this.btEditEmployee);
             this.Controls.Add(this.btAddEmployee);
@@ -126,7 +127,7 @@
         private System.Windows.Forms.Button btAddEmployee;
         private System.Windows.Forms.Button btEditEmployee;
         private System.Windows.Forms.Button btRefreshGridView;
-        private System.Windows.Forms.ComboBox cbSortList;
+        private System.Windows.Forms.ComboBox cbSortListIsActive;
         private System.Windows.Forms.Label label1;
     }
 }

@@ -11,16 +11,20 @@ namespace ProgramKadrowy
         private JSONSerializers<List<Employee>> _serializer = new JSONSerializers<List<Employee>>();
         private int _employeeID;
         private Employee _employee;
+        
         public AddEmployee(int employeeID=0)
         {
             InitializeComponent();
 
             _employeeID = employeeID;
+            _employee = new Employee() { IsActive = true };
             tbFirstName.Select();
 
             FillContractTypeCB();
 
             GetEmployeeData(_employeeID);
+
+            SetVisibleIsActive(_employee);
         }
 
         private void GetEmployeeData(int employeeID)
@@ -35,6 +39,7 @@ namespace ProgramKadrowy
                     throw new Exception("Brak pracownika o podanym ID");
 
                 FillEmployeeData();
+                SetVisibleIsActive(_employee);
             }
         }
 
@@ -45,7 +50,7 @@ namespace ProgramKadrowy
             tbLastName.Text = _employee.LastName;
             tbSalary.Text = _employee.Salary.ToString();
             rtbRemarks.Text = _employee.Remarks;
-            cbAgreementType.SelectedItem = _employee.Contract;
+            cbAgreementType.Text = _employee.Contract;
             dtpHireDate.Value = _employee.EmploymentDate;
             dtpWorkTermination.Value = (DateTime)_employee.UnemploymentDate;
             cbIsActiveEmployee.Checked = _employee.IsActive;
@@ -80,14 +85,15 @@ namespace ProgramKadrowy
                 EmployeeId = _employeeID,
                 FirstName = tbFirstName.Text,
                 LastName = tbLastName.Text,
-                Contract = cbAgreementType.SelectedIndex.ToString(),
+                Contract = cbAgreementType.SelectedItem.ToString(),
                 Remarks = rtbRemarks.Text,
                 Salary = decimal.TryParse(tbSalary.Text, out decimal salary) == true ? Convert.ToDecimal(tbSalary.Text) : salary,
-                EmploymentDate = DateTime.Now,
-                UnemploymentDate = DateTime.Now,
-                IsActive = true,
+                EmploymentDate = dtpHireDate.Value,
+                UnemploymentDate = dtpWorkTermination.Value,
+                IsActive = cbIsActiveEmployee.Checked,
             };
 
+            SetVisibleIsActive(employee);
             employees.Add(employee);
         }
 
@@ -99,6 +105,25 @@ namespace ProgramKadrowy
         private void FillContractTypeCB()
         {
             cbAgreementType.DataSource = Enum.GetValues(typeof(ContractType));
+        }
+
+        private void SetVisibleIsActive(Employee employee)
+        {
+            if (employee.IsActive)
+            {
+                lblWorkTemination.Visible = false;
+                dtpWorkTermination.Visible = false;
+            }
+            else
+            {
+                lblWorkTemination.Visible = true;
+                dtpWorkTermination.Visible = true;
+            }
+        }
+
+        private void cbIsActiveEmployee_CheckedChanged(object sender, EventArgs e)
+        {
+            GetEmployeeData(_employeeID);
         }
     }
 }

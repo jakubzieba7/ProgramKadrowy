@@ -193,6 +193,7 @@
             this.cbIsActiveEmployee.TabIndex = 16;
             this.cbIsActiveEmployee.Text = "Aktywny pracownik";
             this.cbIsActiveEmployee.UseVisualStyleBackColor = true;
+            this.cbIsActiveEmployee.CheckedChanged += new System.EventHandler(this.cbIsActiveEmployee_CheckedChanged);
             // 
             // btCancel
             // 

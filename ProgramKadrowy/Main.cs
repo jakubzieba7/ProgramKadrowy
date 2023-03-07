@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 
 namespace ProgramKadrowy
@@ -14,7 +15,9 @@ namespace ProgramKadrowy
             InitializeComponent();
 
             //NewtonSoftJSONTest();
-            
+
+            FillSortListIsActiveCB();
+
             RefreshGrid();
 
             SetColumnsHeaders();
@@ -72,6 +75,7 @@ namespace ProgramKadrowy
         private void RefreshGrid()
         {
             dgvEmployeesGrid.DataSource = _serializers.DeserializeFromFile_NewJson().OrderBy(x => x.EmployeeId).ToList();
+            cbSortListIsActive.SelectedItem = "Wszyscy";
         }
 
 
@@ -98,6 +102,35 @@ namespace ProgramKadrowy
         private void btRefreshGridView_Click(object sender, EventArgs e)
         {
             RefreshGrid();
+        }
+
+        private void FillSortListIsActiveCB()
+        {
+            cbSortListIsActive.Items.Add("Wszyscy");
+            cbSortListIsActive.Items.Add("W zatrudnieniu");
+            cbSortListIsActive.Items.Add("Poza zatrudnieniem");
+            Refresh();
+        }
+
+        private void cbSortListIsActive_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<Employee> employees = _serializers.DeserializeFromFile_NewJson().OrderBy(x=>x.EmployeeId).ToList();
+            List<Employee> filteredEmployees;
+           
+            switch (cbSortListIsActive.SelectedItem)
+            {
+                case "Poza zatrudnieniem":
+                    filteredEmployees = employees.Where(x => x.IsActive is false).ToList();
+                    break;
+                case "W zatrudnieniu":
+                    filteredEmployees = employees.Where(x => x.IsActive is true).ToList();
+                    break;
+                default:
+                    filteredEmployees = employees.ToList();
+                    break;
+            }
+            
+            dgvEmployeesGrid.DataSource = filteredEmployees;
         }
     }
 }
