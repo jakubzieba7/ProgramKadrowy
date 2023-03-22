@@ -24,7 +24,7 @@ namespace ProgramKadrowy
 
             GetEmployeeData(_employeeID);
 
-            SetVisibleIsActive(_employee);
+            SetVisibleFormsWhenIsActive(_employee.IsActive);
         }
 
         private void GetEmployeeData(int employeeID)
@@ -39,7 +39,10 @@ namespace ProgramKadrowy
                     throw new Exception("Brak pracownika o podanym ID");
 
                 FillEmployeeData();
-                SetVisibleIsActive(_employee);
+
+                SetVisibleFormsWhenIsActive(_employee.IsActive);
+
+                MessageBox.Show(_employee.IsActive.ToString());
             }
         }
 
@@ -87,13 +90,13 @@ namespace ProgramKadrowy
                 LastName = tbLastName.Text,
                 Contract = cbAgreementType.SelectedItem.ToString(),
                 Remarks = rtbRemarks.Text,
-                Salary = decimal.TryParse(tbSalary.Text, out decimal salary) == true ? Convert.ToDecimal(tbSalary.Text) : salary,
+                Salary = decimal.TryParse(tbSalary.Text, out decimal salary) ? Convert.ToDecimal(tbSalary.Text) : salary,
                 EmploymentDate = dtpHireDate.Value,
                 UnemploymentDate = dtpWorkTermination.Value,
                 IsActive = cbIsActiveEmployee.Checked,
             };
 
-            SetVisibleIsActive(employee);
+            SetVisibleFormsWhenIsActive(employee.IsActive);
             employees.Add(employee);
         }
 
@@ -107,9 +110,9 @@ namespace ProgramKadrowy
             cbAgreementType.DataSource = Enum.GetValues(typeof(ContractType));
         }
 
-        private void SetVisibleIsActive(Employee employee)
+        private void SetVisibleFormsWhenIsActive(bool isActive)
         {
-            if (employee.IsActive)
+            if (isActive)
             {
                 lblWorkTemination.Visible = false;
                 dtpWorkTermination.Visible = false;
@@ -123,7 +126,11 @@ namespace ProgramKadrowy
 
         private void cbIsActiveEmployee_CheckedChanged(object sender, EventArgs e)
         {
-            GetEmployeeData(_employeeID);
+            if (_employee.IsActive)
+                SetVisibleFormsWhenIsActive(_employee.IsActive = false);
+            else
+                SetVisibleFormsWhenIsActive(_employee.IsActive = true);
+
         }
     }
 }
