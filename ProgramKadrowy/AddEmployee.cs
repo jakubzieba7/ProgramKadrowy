@@ -11,13 +11,18 @@ namespace ProgramKadrowy
         private JSONSerializers<List<Employee>> _serializer = new JSONSerializers<List<Employee>>();
         private int _employeeID;
         private Employee _employee;
-        
-        public AddEmployee(int employeeID=0)
+
+        public AddEmployee(int employeeID = 0)
         {
             InitializeComponent();
 
             _employeeID = employeeID;
-            _employee = new Employee() { IsActive = true };
+
+            if (_employeeID == 0)
+                _employee = new Employee() { IsActive = true };
+            else
+                _employee = new Employee();
+
             tbFirstName.Select();
 
             FillContractTypeCB();
@@ -25,6 +30,7 @@ namespace ProgramKadrowy
             GetEmployeeData(_employeeID);
 
             SetVisibleFormsWhenIsActive(_employee.IsActive);
+            MessageBox.Show(_employee.IsActive.ToString());
         }
 
         private void GetEmployeeData(int employeeID)
@@ -39,10 +45,6 @@ namespace ProgramKadrowy
                     throw new Exception("Brak pracownika o podanym ID");
 
                 FillEmployeeData();
-
-                SetVisibleFormsWhenIsActive(_employee.IsActive);
-
-                MessageBox.Show(_employee.IsActive.ToString());
             }
         }
 
@@ -61,6 +63,13 @@ namespace ProgramKadrowy
 
         private void btConfirm_Click(object sender, EventArgs e)
         {
+            LoadSaveEditedEmployeeData();
+
+            Close();
+        }
+
+        private void LoadSaveEditedEmployeeData()
+        {
             var employees = _serializer.DeserializeFromFile_NewJson();
 
             if (_employeeID != 0)
@@ -69,10 +78,8 @@ namespace ProgramKadrowy
                 AssignEmployeeHighestID(employees);
 
             AddNewEmployee(employees);
-            
-            _serializer.SerializeToFile_NewJson(employees);
 
-            Close();
+            _serializer.SerializeToFile_NewJson(employees);
         }
 
         private void AssignEmployeeHighestID(List<Employee> employees)
@@ -127,10 +134,15 @@ namespace ProgramKadrowy
         private void cbIsActiveEmployee_CheckedChanged(object sender, EventArgs e)
         {
             if (_employee.IsActive)
-                SetVisibleFormsWhenIsActive(_employee.IsActive = false);
+            {
+                SetVisibleFormsWhenIsActive(false);
+                LoadSaveEditedEmployeeData();
+            }
             else
-                SetVisibleFormsWhenIsActive(_employee.IsActive = true);
-
+            {
+                SetVisibleFormsWhenIsActive(true);
+                LoadSaveEditedEmployeeData();
+            }
         }
     }
 }
