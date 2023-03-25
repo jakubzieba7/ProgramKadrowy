@@ -185,6 +185,8 @@
             // 
             this.cbIsActiveEmployee.AutoSize = true;
             this.cbIsActiveEmployee.CheckAlign = System.Drawing.ContentAlignment.TopRight;
+            this.cbIsActiveEmployee.Checked = true;
+            this.cbIsActiveEmployee.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbIsActiveEmployee.Location = new System.Drawing.Point(151, 235);
             this.cbIsActiveEmployee.Name = "cbIsActiveEmployee";
             this.cbIsActiveEmployee.Size = new System.Drawing.Size(118, 17);

@@ -30,7 +30,7 @@ namespace ProgramKadrowy
             GetEmployeeData(_employeeID);
 
             SetVisibleFormsWhenIsActive(_employee.IsActive);
-            MessageBox.Show(_employee.IsActive.ToString());
+            
         }
 
         private void GetEmployeeData(int employeeID)
@@ -58,7 +58,14 @@ namespace ProgramKadrowy
             cbAgreementType.Text = _employee.Contract;
             dtpHireDate.Value = _employee.EmploymentDate;
             dtpWorkTermination.Value = (DateTime)_employee.UnemploymentDate;
-            cbIsActiveEmployee.Checked = _employee.IsActive;
+            if (_employee.IsActive)
+                cbIsActiveEmployee.Checked = _employee.IsActive;
+            else
+            {
+                cbIsActiveEmployee.Checked = _employee.IsActive;
+                //due to default value of cb set on true and invoking cbIsActiveEmployee_CheckedChanged
+                _employee.IsActive = false;
+            }
         }
 
         private void btConfirm_Click(object sender, EventArgs e)
@@ -103,7 +110,6 @@ namespace ProgramKadrowy
                 IsActive = cbIsActiveEmployee.Checked,
             };
 
-            SetVisibleFormsWhenIsActive(employee.IsActive);
             employees.Add(employee);
         }
 
@@ -133,16 +139,13 @@ namespace ProgramKadrowy
 
         private void cbIsActiveEmployee_CheckedChanged(object sender, EventArgs e)
         {
-            if (_employee.IsActive)
-            {
-                SetVisibleFormsWhenIsActive(false);
-                LoadSaveEditedEmployeeData();
-            }
-            else
-            {
-                SetVisibleFormsWhenIsActive(true);
-                LoadSaveEditedEmployeeData();
-            }
+            _employee.IsActive = !_employee.IsActive;
+
+            SetVisibleFormsWhenIsActive(_employee.IsActive);
+
+            if (!_employee.IsActive)
+                _employee.UnemploymentDate = null;
         }
+
     }
 }
