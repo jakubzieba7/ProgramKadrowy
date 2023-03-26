@@ -55,18 +55,16 @@ namespace ProgramKadrowy
             tbSalary.Text = _employee.Salary.ToString();
             rtbRemarks.Text = _employee.Remarks;
             cbAgreementType.Text = _employee.Contract;
-            dtpWorkTermination.Value = (DateTime)_employee.UnemploymentDate;
+            //dtpWorkTermination.Value = (DateTime)_employee.UnemploymentDate;
             dtpHireDate.Value = _employee.EmploymentDate;
             if (_employee.IsActive)
             {
-                //dtpWorkTermination.Value = DateTime.MinValue;
                 cbIsActiveEmployee.Checked = _employee.IsActive;
             }
             else
             {
-                //dtpWorkTermination.Value = (DateTime)_employee.UnemploymentDate;
                 cbIsActiveEmployee.Checked = _employee.IsActive;
-                //due to default value of cb set on true and invoking cbIsActiveEmployee_CheckedChanged
+                //due to default value of checkbox set on true and invoking cbIsActiveEmployee_CheckedChanged with every cbIsActiveEmployee.Checked = _employee.IsActive;
                 _employee.IsActive = false;
             }
         }
@@ -143,6 +141,7 @@ namespace ProgramKadrowy
         private void cbIsActiveEmployee_CheckedChanged(object sender, EventArgs e)
         {
             _employee.IsActive = !_employee.IsActive;
+            _employee.UnemploymentDate = DateTime.Now;
 
             SetVisibleFormsWhenIsActive(_employee.IsActive);
         }
