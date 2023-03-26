@@ -19,16 +19,14 @@ namespace ProgramKadrowy
             _employeeID = employeeID;
 
             if (_employeeID == 0)
-                _employee = new Employee() {IsActive = true };
+                _employee = new Employee() { IsActive = true };
             else
                 _employee = new Employee();
 
             tbFirstName.Select();
 
             FillContractTypeCB();
-
             GetEmployeeData(_employeeID);
-
             SetVisibleFormsWhenIsActive(_employee.IsActive);
         }
 
@@ -109,7 +107,7 @@ namespace ProgramKadrowy
                 EmploymentDate = dtpHireDate.Value,
                 UnemploymentDate = dtpWorkTermination.Value,
                 IsActive = cbIsActiveEmployee.Checked,
-        };
+            };
 
             employees.Add(employee);
         }

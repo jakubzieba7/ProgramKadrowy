@@ -12,26 +12,22 @@ namespace ProgramKadrowy
 
         public bool IsMaximize
         {
-            get 
+            get
             {
                 return Settings.Default.IsMaximize;
-            } 
-            set 
+            }
+            set
             {
                 Settings.Default.IsMaximize = value;
             }
         }
-        
+
         public Main()
         {
             InitializeComponent();
-
             //NewtonSoftJSONTest();
-
             FillSortListIsActiveCB();
-
             RefreshGrid();
-
             SetColumnsHeaders();
 
             //if (IsMaximize)
@@ -40,15 +36,15 @@ namespace ProgramKadrowy
 
         private void SetColumnsHeaders()
         {
-            dgvEmployeesGrid.Columns[0].HeaderText = "L.p.";
-            dgvEmployeesGrid.Columns[1].HeaderText = "Imię";
-            dgvEmployeesGrid.Columns[2].HeaderText = "Nazwisko";
-            dgvEmployeesGrid.Columns[3].HeaderText = "Umowa";
-            dgvEmployeesGrid.Columns[4].HeaderText = "Uwagi";
-            dgvEmployeesGrid.Columns[5].HeaderText = "Wynagrodzenie";
-            dgvEmployeesGrid.Columns[6].HeaderText = "Data zatrudnienia";
-            dgvEmployeesGrid.Columns[7].HeaderText = "Data zakończenia współpracy";
-            dgvEmployeesGrid.Columns[8].HeaderText = "Aktualnie zatrudniony";
+            dgvEmployeesGrid.Columns[nameof(Employee.EmployeeId)].HeaderText = "L.p.";
+            dgvEmployeesGrid.Columns[nameof(Employee.FirstName)].HeaderText = "Imię";
+            dgvEmployeesGrid.Columns[nameof(Employee.LastName)].HeaderText = "Nazwisko";
+            dgvEmployeesGrid.Columns[nameof(Employee.Contract)].HeaderText = "Umowa";
+            dgvEmployeesGrid.Columns[nameof(Employee.Remarks)].HeaderText = "Uwagi";
+            dgvEmployeesGrid.Columns[nameof(Employee.Salary)].HeaderText = "Wynagrodzenie";
+            dgvEmployeesGrid.Columns[nameof(Employee.EmploymentDate)].HeaderText = "Data zatrudnienia";
+            dgvEmployeesGrid.Columns[nameof(Employee.UnemploymentDate)].HeaderText = "Data zakończenia współpracy";
+            dgvEmployeesGrid.Columns[nameof(Employee.IsActive)].HeaderText = "Aktualnie zatrudniony";
         }
 
         public void NewtonSoftJSONTest()
@@ -81,7 +77,7 @@ namespace ProgramKadrowy
 
             _serializers.SerializeToFile_NewtonSoft(employees);
 
-            List<Employee> employees1= _serializers.DeserializeFromFile_NewtonSoft().ToList();
+            List<Employee> employees1 = _serializers.DeserializeFromFile_NewtonSoft().ToList();
 
             dgvEmployeesGrid.DataSource = employees1;
         }
@@ -130,7 +126,7 @@ namespace ProgramKadrowy
         {
             List<Employee> employees = _serializers.DeserializeFromFile_NewJson().OrderBy(x => x.EmployeeId).Select(x => new Employee() { EmployeeId = x.EmployeeId, FirstName = x.FirstName, LastName = x.LastName, Contract = x.Contract, Remarks = x.Remarks, Salary = x.Salary, EmploymentDate = x.EmploymentDate, UnemploymentDate = x.IsActive ? null : x.UnemploymentDate, IsActive = x.IsActive }).ToList();
             List<Employee> filteredEmployees;
-           
+
             switch (cbSortListIsActive.SelectedItem)
             {
                 case "Poza zatrudnieniem":
@@ -143,28 +139,28 @@ namespace ProgramKadrowy
                     filteredEmployees = employees.ToList();
                     break;
             }
-            
+
             dgvEmployeesGrid.DataSource = filteredEmployees;
-            
+
         }
 
         private void UnemploymentDateVisibility()
         {
-            List<Employee> newEmployeeList=new List<Employee>();
+            List<Employee> newEmployeeList = new List<Employee>();
 
             foreach (DataGridViewRow row in dgvEmployeesGrid.Rows)
             {
                 Employee employee = new Employee()
                 {
-                    EmployeeId = Convert.ToInt32(row.Cells[0].Value),
-                    FirstName = row.Cells[1].Value.ToString(),
-                    LastName = row.Cells[2].Value.ToString(),
-                    Contract = row.Cells[3].Value.ToString(),
-                    Remarks = row.Cells[4].Value.ToString(),
-                    Salary = Convert.ToDecimal(row.Cells[5].Value),
-                    EmploymentDate = (DateTime)row.Cells[6].Value,
-                    UnemploymentDate = (DateTime)row.Cells[7].Value,
-                    IsActive = (bool)row.Cells[8].Value
+                    EmployeeId = Convert.ToInt32(row.Cells[nameof(employee.EmployeeId)].Value),
+                    FirstName = row.Cells[nameof(employee.FirstName)].Value.ToString(),
+                    LastName = row.Cells[nameof(employee.LastName)].Value.ToString(),
+                    Contract = row.Cells[nameof(employee.Contract)].Value.ToString(),
+                    Remarks = row.Cells[nameof(employee.Remarks)].Value.ToString(),
+                    Salary = Convert.ToDecimal(row.Cells[nameof(employee.Salary)].Value),
+                    EmploymentDate = (DateTime)row.Cells[nameof(employee.EmploymentDate)].Value,
+                    UnemploymentDate = (DateTime)row.Cells[nameof(employee.UnemploymentDate)].Value,
+                    IsActive = (bool)row.Cells[nameof(employee.IsActive)].Value
                 };
 
                 if (employee.IsActive)
