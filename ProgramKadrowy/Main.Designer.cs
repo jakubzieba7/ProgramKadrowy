@@ -115,6 +115,7 @@
             this.Controls.Add(this.dgvEmployeesGrid);
             this.Name = "Main";
             this.Text = "Program kadrowy";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployeesGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

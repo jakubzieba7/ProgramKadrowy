@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProgramKadrowy.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,6 +9,18 @@ namespace ProgramKadrowy
     public partial class Main : Form
     {
         private JSONSerializers<List<Employee>> _serializers = new JSONSerializers<List<Employee>>();
+
+        public bool IsMaximize
+        {
+            get 
+            {
+                return Settings.Default.IsMaximize;
+            } 
+            set 
+            {
+                Settings.Default.IsMaximize = value;
+            }
+        }
         
         public Main()
         {
@@ -20,6 +33,9 @@ namespace ProgramKadrowy
             RefreshGrid();
 
             SetColumnsHeaders();
+
+            //if (IsMaximize)
+            //    WindowState = FormWindowState.Maximized;
         }
 
         private void SetColumnsHeaders()
@@ -158,6 +174,16 @@ namespace ProgramKadrowy
             }
 
             dgvEmployeesGrid.DataSource = newEmployeeList;
+        }
+
+        private void Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //if (WindowState == FormWindowState.Maximized)
+            //    IsMaximize = true;
+            //else
+            //    IsMaximize = false;
+
+            //Settings.Default.Save();
         }
     }
 }
