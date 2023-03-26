@@ -19,7 +19,7 @@ namespace ProgramKadrowy
             _employeeID = employeeID;
 
             if (_employeeID == 0)
-                _employee = new Employee() { IsActive = true };
+                _employee = new Employee() {IsActive = true };
             else
                 _employee = new Employee();
 
@@ -30,7 +30,6 @@ namespace ProgramKadrowy
             GetEmployeeData(_employeeID);
 
             SetVisibleFormsWhenIsActive(_employee.IsActive);
-            
         }
 
         private void GetEmployeeData(int employeeID)
@@ -56,12 +55,16 @@ namespace ProgramKadrowy
             tbSalary.Text = _employee.Salary.ToString();
             rtbRemarks.Text = _employee.Remarks;
             cbAgreementType.Text = _employee.Contract;
-            dtpHireDate.Value = _employee.EmploymentDate;
             dtpWorkTermination.Value = (DateTime)_employee.UnemploymentDate;
+            dtpHireDate.Value = _employee.EmploymentDate;
             if (_employee.IsActive)
+            {
+                //dtpWorkTermination.Value = DateTime.MinValue;
                 cbIsActiveEmployee.Checked = _employee.IsActive;
+            }
             else
             {
+                //dtpWorkTermination.Value = (DateTime)_employee.UnemploymentDate;
                 cbIsActiveEmployee.Checked = _employee.IsActive;
                 //due to default value of cb set on true and invoking cbIsActiveEmployee_CheckedChanged
                 _employee.IsActive = false;
@@ -108,7 +111,7 @@ namespace ProgramKadrowy
                 EmploymentDate = dtpHireDate.Value,
                 UnemploymentDate = dtpWorkTermination.Value,
                 IsActive = cbIsActiveEmployee.Checked,
-            };
+        };
 
             employees.Add(employee);
         }
@@ -142,9 +145,6 @@ namespace ProgramKadrowy
             _employee.IsActive = !_employee.IsActive;
 
             SetVisibleFormsWhenIsActive(_employee.IsActive);
-
-            if (!_employee.IsActive)
-                _employee.UnemploymentDate = null;
         }
 
     }

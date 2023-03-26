@@ -21,7 +21,6 @@ namespace ProgramKadrowy
             RefreshGrid();
 
             SetColumnsHeaders();
-            
         }
 
         private void SetColumnsHeaders()
@@ -74,7 +73,7 @@ namespace ProgramKadrowy
 
         private void RefreshGrid()
         {
-            dgvEmployeesGrid.DataSource = _serializers.DeserializeFromFile_NewJson().OrderBy(x => x.EmployeeId).ToList();
+            dgvEmployeesGrid.DataSource = _serializers.DeserializeFromFile_NewJson().OrderBy(x => x.EmployeeId).Select(x => new Employee() { EmployeeId = x.EmployeeId, FirstName = x.FirstName, LastName = x.LastName, Contract = x.Contract, Remarks = x.Remarks, Salary = x.Salary, EmploymentDate = x.EmploymentDate, UnemploymentDate = x.IsActive ? null : x.UnemploymentDate, IsActive = x.IsActive }).ToList();
             cbSortListIsActive.SelectedItem = "Wszyscy";
         }
 
@@ -114,7 +113,7 @@ namespace ProgramKadrowy
 
         private void cbSortListIsActive_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<Employee> employees = _serializers.DeserializeFromFile_NewJson().OrderBy(x=>x.EmployeeId).ToList();
+            List<Employee> employees = _serializers.DeserializeFromFile_NewJson().OrderBy(x => x.EmployeeId).Select(x => new Employee() { EmployeeId = x.EmployeeId, FirstName = x.FirstName, LastName = x.LastName, Contract = x.Contract, Remarks = x.Remarks, Salary = x.Salary, EmploymentDate = x.EmploymentDate, UnemploymentDate = x.IsActive ? null : x.UnemploymentDate, IsActive = x.IsActive }).ToList();
             List<Employee> filteredEmployees;
            
             switch (cbSortListIsActive.SelectedItem)
@@ -131,6 +130,35 @@ namespace ProgramKadrowy
             }
             
             dgvEmployeesGrid.DataSource = filteredEmployees;
+            
+        }
+
+        private void UnemploymentDateVisibility()
+        {
+            List<Employee> newEmployeeList=new List<Employee>();
+
+            foreach (DataGridViewRow row in dgvEmployeesGrid.Rows)
+            {
+                Employee employee = new Employee()
+                {
+                    EmployeeId = Convert.ToInt32(row.Cells[0].Value),
+                    FirstName = row.Cells[1].Value.ToString(),
+                    LastName = row.Cells[2].Value.ToString(),
+                    Contract = row.Cells[3].Value.ToString(),
+                    Remarks = row.Cells[4].Value.ToString(),
+                    Salary = Convert.ToDecimal(row.Cells[5].Value),
+                    EmploymentDate = (DateTime)row.Cells[6].Value,
+                    UnemploymentDate = (DateTime)row.Cells[7].Value,
+                    IsActive = (bool)row.Cells[8].Value
+                };
+
+                if (employee.IsActive)
+                    employee.UnemploymentDate = null;
+
+                newEmployeeList.Add(employee);
+            }
+
+            dgvEmployeesGrid.DataSource = newEmployeeList;
         }
     }
 }
