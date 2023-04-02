@@ -30,8 +30,8 @@ namespace ProgramKadrowy
             RefreshGrid();
             SetColumnsHeaders();
 
-            //if (IsMaximize)
-            //    WindowState = FormWindowState.Maximized;
+            if (IsMaximize)
+                WindowState = FormWindowState.Maximized;
         }
 
         private void SetColumnsHeaders()
@@ -174,12 +174,12 @@ namespace ProgramKadrowy
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //if (WindowState == FormWindowState.Maximized)
-            //    IsMaximize = true;
-            //else
-            //    IsMaximize = false;
+            if (WindowState == FormWindowState.Maximized)
+                IsMaximize = true;
+            else
+                IsMaximize = false;
 
-            //Settings.Default.Save();
+            Settings.Default.Save();
         }
     }
 }
